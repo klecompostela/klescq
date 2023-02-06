@@ -41,7 +41,7 @@ namespace PESModSelector
                 txtFicheroINI.Text = sRuta;
                 sRuta = LeerINI("PES", "RUTA_INI");
                 string sTOTAL_SAVES = LeerINI("PES", "TOTAL_SAVES");
-                int i = 0;
+                int i = 1;
                 int iTOTAL_SAVES = int.Parse(sTOTAL_SAVES);
                 while (i < iTOTAL_SAVES)
                 {
@@ -61,6 +61,7 @@ namespace PESModSelector
             }
 
         }
+
         private string LeerINI(string seccion, string ruta)
         {
             string rutaFicheroINI = txtFicheroINI.Text;
@@ -98,21 +99,8 @@ namespace PESModSelector
 
                 string sRutaBAK = LeerINI("PES", "RUTA_MOD_BAK") + pesActual;
                 string sRutaSave = LeerINI("PES", "RUTA_SAVE");
-                //nombre de la carpeta,content/stadium-server
-                string sRutaStadiumServer = LeerINI("PES", "RUTA_STADIUM_SERVER");
-                string sRutaOrigenStadiumServer = string.Format(sRutaStadiumServer, pesActual);
-                string sRutaDestinoStadiumServer = string.Format(sRutaStadiumServer, cbPesMod.SelectedItem.ToString());
-                if (sRutaOrigenStadiumServer != sRutaDestinoStadiumServer)
-                {
-                    //MessageBox.Show(string.Format("Movemos de {0} a {1}",sRutaOrigenStadiumServer, sRutaDestinoStadiumServer));
-                    Directory.Move(sRutaOrigenStadiumServer + "Classic", sRutaDestinoStadiumServer + "Classic");
-                    Directory.Move(sRutaOrigenStadiumServer + "Galicia", sRutaDestinoStadiumServer + "Galicia");
-                    Directory.Move(sRutaOrigenStadiumServer + "Others", sRutaDestinoStadiumServer + "Others");
-                    Directory.Move(sRutaOrigenStadiumServer + "Spain", sRutaDestinoStadiumServer + "Spain");
-                }
-                else
-                {
-                    MessageBox.Show("El origen y el destino tiene que ser diferente");
+                bool error = moverStadiumServer(pesActual);
+                if (error){
                     return;
                 }
                 //DE LA RUTA SAVE a RUTA DEL MOD 
@@ -153,6 +141,59 @@ namespace PESModSelector
         /// PES EN USO ACTUALMENTE: VAMOS A QUITARLO A SU CARPETA ORIGEN "INFO"
         /// </summary>
         /// <returns></returns>
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private bool moverStadiumServer(string pesActual)
+        {
+            try
+            {
+                string sTOTAL_CARPETAS = LeerINI("PES", "TOTAL_CARPETAS_STADIUM_SERVER");
+                int i = 1;
+                int iTOTAL_CARPETAS = int.Parse(sTOTAL_CARPETAS);
+                List<string> listCarpetasStadiumServer = new List<string>();
+                while (i < iTOTAL_CARPETAS)
+                {
+                    string s = LeerINI("PES", "CARPETAS_STADIUM_SERVER_" + i);
+                    if (!string.IsNullOrEmpty(s))
+                    {
+                        listCarpetasStadiumServer.Add(s);
+                    }
+                    i++;
+                }
+
+                //nombre de la carpeta,content/stadium-server
+                string sRutaStadiumServer = LeerINI("PES", "RUTA_STADIUM_SERVER");
+                //Total de carpetas del stadiumserver a mover
+                string sTotalCarpetasStadiumServer = LeerINI("PES", "TOTAL_CARPETAS_STADIUM_SERVER");
+                string sRutaOrigenStadiumServer = string.Format(sRutaStadiumServer, pesActual);
+                string sRutaDestinoStadiumServer = string.Format(sRutaStadiumServer, cbPesMod.SelectedItem.ToString());
+                if (sRutaOrigenStadiumServer != sRutaDestinoStadiumServer)
+                {
+                    foreach (string sCarpeta in listCarpetasStadiumServer) {
+                        Directory.Move(sRutaOrigenStadiumServer + sCarpeta, sRutaDestinoStadiumServer + sCarpeta);
+                    }
+                    //MessageBox.Show(string.Format("Movemos de {0} a {1}",sRutaOrigenStadiumServer, sRutaDestinoStadiumServer));
+                    //Directory.Move(sRutaOrigenStadiumServer + "Classic", sRutaDestinoStadiumServer + "Classic");
+                    //Directory.Move(sRutaOrigenStadiumServer + "Galicia", sRutaDestinoStadiumServer + "Galicia");
+                    //Directory.Move(sRutaOrigenStadiumServer + "Others", sRutaDestinoStadiumServer + "Others");
+                    //Directory.Move(sRutaOrigenStadiumServer + "Spain", sRutaDestinoStadiumServer + "Spain");
+                }
+                else
+                {
+                    MessageBox.Show("Mover stadium server.El origen y el destino tiene que ser diferente");
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al mover stadium server." + Environment.NewLine + ex.Message);
+                return true;
+            }
+
+        }
         private string obtenerInfoPESActual()
         {
             try
