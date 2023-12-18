@@ -99,10 +99,11 @@ namespace PESModSelector
 
                 string sRutaBAK = LeerINI("PES", "RUTA_MOD_BAK") + pesActual;
                 string sRutaSave = LeerINI("PES", "RUTA_SAVE");
-                bool error = moverStadiumServer(pesActual);
-                if (error){
-                    return;
-                }
+                //ya no se mueve el stadium server, se fijó en una carperta
+                //bool error = moverStadiumServer(pesActual);
+                //if (error){
+                //    return;
+                //}
                 //DE LA RUTA SAVE a RUTA DEL MOD 
                 if (Directory.Exists(sRutaBAK) == true)
                 {
@@ -120,7 +121,7 @@ namespace PESModSelector
                 if (sRutaOrigenNuevoMOD != sRutaDestino)
                 {
                     Directory.Move(sRutaOrigenNuevoMOD, sRutaDestino);
-                    MessageBox.Show("SAVE actualizado a " + cbPesMod.SelectedItem.ToString());
+                    MessageBox.Show("SAVE actualizado a " + cbPesMod.SelectedItem.ToString() + "\nRevisa el exe.");
                 }
                 else
                 {
