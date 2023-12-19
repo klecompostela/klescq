@@ -29,93 +29,118 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PESSelector));
-            this.btnAceptar = new System.Windows.Forms.Button();
-            this.btnCancelar = new System.Windows.Forms.Button();
-            this.cbPesMod = new System.Windows.Forms.ComboBox();
-            this.btSeleccionarINI = new System.Windows.Forms.Button();
-            this.txtFicheroINI = new System.Windows.Forms.TextBox();
-            this.lbPESActual = new System.Windows.Forms.Label();
-            this.SuspendLayout();
+            btnAceptar = new Button();
+            btnCancelar = new Button();
+            cbPesMod = new ComboBox();
+            btSeleccionarINI = new Button();
+            txtFicheroINI = new TextBox();
+            lbPESActual = new Label();
+            chkMoverStadiumServer = new CheckBox();
+            chkDiscoExterno = new CheckBox();
+            SuspendLayout();
             // 
             // btnAceptar
             // 
-            this.btnAceptar.Location = new System.Drawing.Point(451, 157);
-            this.btnAceptar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnAceptar.Name = "btnAceptar";
-            this.btnAceptar.Size = new System.Drawing.Size(135, 44);
-            this.btnAceptar.TabIndex = 0;
-            this.btnAceptar.Text = "Aceptar";
-            this.btnAceptar.UseVisualStyleBackColor = true;
-            this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
+            btnAceptar.Location = new Point(451, 157);
+            btnAceptar.Margin = new Padding(3, 2, 3, 2);
+            btnAceptar.Name = "btnAceptar";
+            btnAceptar.Size = new Size(135, 44);
+            btnAceptar.TabIndex = 0;
+            btnAceptar.Text = "Aceptar";
+            btnAceptar.UseVisualStyleBackColor = true;
+            btnAceptar.Click += btnAceptar_Click;
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(591, 157);
-            this.btnCancelar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(133, 44);
-            this.btnCancelar.TabIndex = 1;
-            this.btnCancelar.Text = "Cancelar";
-            this.btnCancelar.UseVisualStyleBackColor = true;
-            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            btnCancelar.Location = new Point(591, 157);
+            btnCancelar.Margin = new Padding(3, 2, 3, 2);
+            btnCancelar.Name = "btnCancelar";
+            btnCancelar.Size = new Size(133, 44);
+            btnCancelar.TabIndex = 1;
+            btnCancelar.Text = "Cancelar";
+            btnCancelar.UseVisualStyleBackColor = true;
+            btnCancelar.Click += btnCancelar_Click;
             // 
             // cbPesMod
             // 
-            this.cbPesMod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbPesMod.FormattingEnabled = true;
-            this.cbPesMod.Location = new System.Drawing.Point(36, 106);
-            this.cbPesMod.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.cbPesMod.Name = "cbPesMod";
-            this.cbPesMod.Size = new System.Drawing.Size(445, 23);
-            this.cbPesMod.TabIndex = 2;
+            cbPesMod.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbPesMod.FormattingEnabled = true;
+            cbPesMod.Location = new Point(36, 106);
+            cbPesMod.Margin = new Padding(3, 2, 3, 2);
+            cbPesMod.Name = "cbPesMod";
+            cbPesMod.Size = new Size(445, 23);
+            cbPesMod.TabIndex = 2;
             // 
             // btSeleccionarINI
             // 
-            this.btSeleccionarINI.Location = new System.Drawing.Point(493, 70);
-            this.btSeleccionarINI.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btSeleccionarINI.Name = "btSeleccionarINI";
-            this.btSeleccionarINI.Size = new System.Drawing.Size(60, 20);
-            this.btSeleccionarINI.TabIndex = 3;
-            this.btSeleccionarINI.Text = "...";
-            this.btSeleccionarINI.UseVisualStyleBackColor = true;
-            this.btSeleccionarINI.Click += new System.EventHandler(this.btSeleccionarINI_Click);
+            btSeleccionarINI.Location = new Point(493, 70);
+            btSeleccionarINI.Margin = new Padding(3, 2, 3, 2);
+            btSeleccionarINI.Name = "btSeleccionarINI";
+            btSeleccionarINI.Size = new Size(60, 20);
+            btSeleccionarINI.TabIndex = 3;
+            btSeleccionarINI.Text = "...";
+            btSeleccionarINI.UseVisualStyleBackColor = true;
+            btSeleccionarINI.Click += btSeleccionarINI_Click;
             // 
             // txtFicheroINI
             // 
-            this.txtFicheroINI.Location = new System.Drawing.Point(36, 70);
-            this.txtFicheroINI.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtFicheroINI.Name = "txtFicheroINI";
-            this.txtFicheroINI.Size = new System.Drawing.Size(445, 23);
-            this.txtFicheroINI.TabIndex = 4;
+            txtFicheroINI.Location = new Point(36, 70);
+            txtFicheroINI.Margin = new Padding(3, 2, 3, 2);
+            txtFicheroINI.Name = "txtFicheroINI";
+            txtFicheroINI.Size = new Size(445, 23);
+            txtFicheroINI.TabIndex = 4;
             // 
             // lbPESActual
             // 
-            this.lbPESActual.AutoSize = true;
-            this.lbPESActual.Location = new System.Drawing.Point(36, 21);
-            this.lbPESActual.Name = "lbPESActual";
-            this.lbPESActual.Size = new System.Drawing.Size(73, 15);
-            this.lbPESActual.TabIndex = 5;
-            this.lbPESActual.Text = "PES EN USO:";
+            lbPESActual.AutoSize = true;
+            lbPESActual.Location = new Point(36, 21);
+            lbPESActual.Name = "lbPESActual";
+            lbPESActual.Size = new Size(73, 15);
+            lbPESActual.TabIndex = 5;
+            lbPESActual.Text = "PES EN USO:";
+            // 
+            // chkMoverStadiumServer
+            // 
+            chkMoverStadiumServer.AutoSize = true;
+            chkMoverStadiumServer.Checked = true;
+            chkMoverStadiumServer.CheckState = CheckState.Checked;
+            chkMoverStadiumServer.Location = new Point(38, 146);
+            chkMoverStadiumServer.Name = "chkMoverStadiumServer";
+            chkMoverStadiumServer.Size = new Size(142, 19);
+            chkMoverStadiumServer.TabIndex = 6;
+            chkMoverStadiumServer.Text = "Mover Stadium Server";
+            chkMoverStadiumServer.UseVisualStyleBackColor = true;
+            // 
+            // chkDiscoExterno
+            // 
+            chkDiscoExterno.AutoSize = true;
+            chkDiscoExterno.Location = new Point(38, 171);
+            chkDiscoExterno.Name = "chkDiscoExterno";
+            chkDiscoExterno.Size = new Size(98, 19);
+            chkDiscoExterno.TabIndex = 7;
+            chkDiscoExterno.Text = "Disco Externo";
+            chkDiscoExterno.UseVisualStyleBackColor = true;
             // 
             // PESSelector
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(734, 272);
-            this.Controls.Add(this.lbPESActual);
-            this.Controls.Add(this.txtFicheroINI);
-            this.Controls.Add(this.btSeleccionarINI);
-            this.Controls.Add(this.cbPesMod);
-            this.Controls.Add(this.btnCancelar);
-            this.Controls.Add(this.btnAceptar);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.Name = "PESSelector";
-            this.Text = "PESSelector";
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(734, 272);
+            Controls.Add(chkDiscoExterno);
+            Controls.Add(chkMoverStadiumServer);
+            Controls.Add(lbPESActual);
+            Controls.Add(txtFicheroINI);
+            Controls.Add(btSeleccionarINI);
+            Controls.Add(cbPesMod);
+            Controls.Add(btnCancelar);
+            Controls.Add(btnAceptar);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(3, 2, 3, 2);
+            Name = "PESSelector";
+            Text = "PESSelector";
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -126,5 +151,7 @@
         private Button btSeleccionarINI;
         private TextBox txtFicheroINI;
         private Label lbPESActual;
+        private CheckBox chkMoverStadiumServer;
+        private CheckBox chkDiscoExterno;
     }
 }
