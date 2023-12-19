@@ -217,24 +217,24 @@ namespace PESModSelector
                 string sArchivoEliminarConfig = sRutaStadiumServerDestino + "config.ini";
                 string sArchivoEliminarMapCompetitions = sRutaStadiumServerDestino + "map_competitions.txt";
                 string sArchivoEliminarMapTeams = sRutaStadiumServerDestino + "map_teams.txt";
-                MessageBox.Show("sArchivoEliminarConfig" + sArchivoEliminarConfig);
-                MessageBox.Show("sArchivoEliminarMapCompetitions" + sArchivoEliminarMapCompetitions);
-                MessageBox.Show("sArchivoEliminarMapTeams" + sArchivoEliminarMapTeams);
+                //MessageBox.Show("sArchivoEliminarConfig" + sArchivoEliminarConfig);
+                //MessageBox.Show("sArchivoEliminarMapCompetitions" + sArchivoEliminarMapCompetitions);
+                //MessageBox.Show("sArchivoEliminarMapTeams" + sArchivoEliminarMapTeams);
 
-                //if (File.Exists(sArchivoEliminarConfig))
-                //{
-                //    File.Delete(sArchivoEliminarConfig);
-                //}
-                //
-                //if (File.Exists(sArchivoEliminarConfig))
-                //{
-                //    File.Delete(sArchivoEliminarMapCompetitions);
-                //}
-                //
-                //if (File.Exists(sArchivoEliminarConfig))
-                //{
-                //    File.Delete(sArchivoEliminarMapTeams);
-                //}
+                if (File.Exists(sArchivoEliminarConfig))
+                {
+                    File.Delete(sArchivoEliminarConfig);
+                }
+                
+                if (File.Exists(sArchivoEliminarMapCompetitions))
+                {
+                    File.Delete(sArchivoEliminarMapCompetitions);
+                }
+                
+                if (File.Exists(sArchivoEliminarMapTeams))
+                {
+                    File.Delete(sArchivoEliminarMapTeams);
+                }
 
                 //copiamos los nuevos, al destino, vemos si está en C o G
                 string sRutaStadiumServerActual = LeerINI("PES", "RUTA_STADIUM_SERVER");
@@ -257,24 +257,24 @@ namespace PESModSelector
                 string sArchivoActualMapCompetitions = sRutaStadiumServerActual + "map_competitions.txt";
                 string sArchivoActualMapTeams = sRutaStadiumServerActual + "map_teams.txt";
 
-                MessageBox.Show("sArchivoActualConfig" + sArchivoActualConfig);
-                MessageBox.Show("sArchivoActualMapCompetitions" + sArchivoActualMapCompetitions);
-                MessageBox.Show("sArchivoActualMapTeams" + sArchivoActualMapTeams);
+                //MessageBox.Show("sArchivoActualConfig" + sArchivoActualConfig);
+                //MessageBox.Show("sArchivoActualMapCompetitions" + sArchivoActualMapCompetitions);
+                //MessageBox.Show("sArchivoActualMapTeams" + sArchivoActualMapTeams);
 
-                //if (File.Exists(sArchivoActualConfig))
-                //{
-                //    File.Copy(sArchivoActualConfig, sArchivoEliminarConfig);
-                //}
-                //
-                //if (File.Exists(sArchivoActualMapCompetitions))
-                //{
-                //    File.Copy(sArchivoActualMapCompetitions, sArchivoEliminarMapCompetitions);
-                //}
-                //
-                //if (File.Exists(sArchivoActualMapTeams))
-                //{
-                //    File.Copy(sArchivoActualMapTeams, sArchivoEliminarConfig);
-                //}
+                if (File.Exists(sArchivoActualConfig))
+                {
+                    File.Copy(sArchivoActualConfig, sArchivoEliminarConfig);
+                }
+                
+                if (File.Exists(sArchivoActualMapCompetitions))
+                {
+                    File.Copy(sArchivoActualMapCompetitions, sArchivoEliminarMapCompetitions);
+                }
+                
+                if (File.Exists(sArchivoActualMapTeams))
+                {
+                    File.Copy(sArchivoActualMapTeams, sArchivoEliminarMapTeams);
+                }
                 return false;
             }
             catch (Exception ex)
