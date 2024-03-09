@@ -105,7 +105,8 @@ namespace PESModSelector
                 }
                 else
                 {
-                    if (cbPesMod.SelectedItem == null) {                        
+                    if (cbPesMod.SelectedItem == null)
+                    {
                         MessageBox.Show("Seleccione un elemento.");
                         return;
                     }
@@ -346,160 +347,76 @@ namespace PESModSelector
 
         }
 
+
+        // Helper method to move directory contents
+        static void MoveDirectoryContents(string sourcePath, string destinationPath)
+        {
+            // Create the destination directory if it doesn't exist
+            if (!Directory.Exists(destinationPath))
+            {
+                Directory.CreateDirectory(destinationPath);
+            }
+
+            // Move each file from the source directory to the destination directory
+            foreach (string filePath in Directory.GetFiles(sourcePath))
+            {
+                string fileName = Path.GetFileName(filePath);
+                string destinationFilePath = Path.Combine(destinationPath, fileName);
+                File.Move(filePath, destinationFilePath);
+            }
+
+            // Move each subdirectory from the source directory to the destination directory
+            foreach (string subdirectoryPath in Directory.GetDirectories(sourcePath))
+            {
+                string subdirectoryName = Path.GetFileName(subdirectoryPath);
+                string destinationSubdirectoryPath = Path.Combine(destinationPath, subdirectoryName);
+                MoveDirectoryContents(subdirectoryPath, destinationSubdirectoryPath);
+                Directory.Delete(subdirectoryPath);
+            }
+        }
         /// <summary>
-        /// En funcion del pesSeleccionado, movemos el CPK
+        /// 
         /// </summary>
         /// <returns></returns>
         private bool copiarCPK()
         {
             try
             {
-                #region archivos de DOWNLOAD
-                //eliminamos los CPK afectados              
                 string sRUTA_CPK_DONWLOAD_DESTINO = LeerINI("PES", "RUTA_CPK_DONWLOAD_DESTINO");
+                string sRUTA_CPK_DONWLOAD_ORIGINAL = LeerINI("PES", "RUTA_CPK_DONWLOAD_ORIGINAL");
+                string sRUTA_CPK_DONWLOAD_TEMPORADA2006 = LeerINI("PES", "RUTA_CPK_DONWLOAD_TEMPORADA2006");
 
-                string sdt80_100E_x64 = "dt80_100E_x64.cpk";
-                string sdt80_700E_x64 = "dt80_700E_x64.cpk";
-
-                //ELIMINAMOS LOS DEL DESTINO
-                string sArchivoEliminar_dt80_100E_x64 = sRUTA_CPK_DONWLOAD_DESTINO + sdt80_100E_x64;
-                string sArchivoEliminar_dt80_700E_x64 = sRUTA_CPK_DONWLOAD_DESTINO + sdt80_700E_x64;
-
-                if (File.Exists(sArchivoEliminar_dt80_100E_x64))
+                //movemos lo que hay a su origen.... y el destino se queda vacio.
+                if (pesEnUso.CPK_ORIGINAL == "SI")
                 {
-                    File.Delete(sArchivoEliminar_dt80_100E_x64);
-                }
-
-                if (File.Exists(sArchivoEliminar_dt80_700E_x64))
-                {
-                    File.Delete(sArchivoEliminar_dt80_700E_x64);
-                }
-
-                //archivos afectados
-                if (pesSeleccionado.CPK_ORIGINAL == "SI")
-                {
-
-                    string sRUTA_CPK_ORIGINALWCsdt80_100E_x64 = LeerINI("PES", "RUTA_CPK_DONWLOAD_ORIGINAL") + sdt80_100E_x64;
-                    string sRUTA_CPK_ORIGINALWCsdt80_700E_x64 = LeerINI("PES", "RUTA_CPK_DONWLOAD_ORIGINAL") + sdt80_700E_x64;
-
-                    if (File.Exists(sRUTA_CPK_ORIGINALWCsdt80_100E_x64))
-                    {
-                        File.Copy(sRUTA_CPK_ORIGINALWCsdt80_100E_x64, sArchivoEliminar_dt80_100E_x64);
-                    }
-                    if (File.Exists(sRUTA_CPK_ORIGINALWCsdt80_700E_x64))
-                    {
-                        File.Copy(sRUTA_CPK_ORIGINALWCsdt80_700E_x64, sArchivoEliminar_dt80_700E_x64);
-                    }
+                    MoveDirectoryContents(sRUTA_CPK_DONWLOAD_DESTINO, sRUTA_CPK_DONWLOAD_ORIGINAL);
                 }
                 else
                 {
-                    string sRUTA_CPK_2006WCsdt80_100E_x64 = LeerINI("PES", "RUTA_CPK_DONWLOAD_2006WC") + sdt80_100E_x64;
-                    string sRUTA_CPK_2006WCsdt80_700E_x64 = LeerINI("PES", "RUTA_CPK_DONWLOAD_2006WC") + sdt80_700E_x64;
 
-                    if (File.Exists(sRUTA_CPK_2006WCsdt80_100E_x64))
-                    {
-                        File.Copy(sRUTA_CPK_2006WCsdt80_100E_x64, sArchivoEliminar_dt80_100E_x64);
-                    }
-                    if (File.Exists(sRUTA_CPK_2006WCsdt80_700E_x64))
-                    {
-                        File.Copy(sRUTA_CPK_2006WCsdt80_700E_x64, sArchivoEliminar_dt80_700E_x64);
-                    }
+                    MoveDirectoryContents(sRUTA_CPK_DONWLOAD_DESTINO, sRUTA_CPK_DONWLOAD_TEMPORADA2006);
                 }
 
-                #endregion
 
-                #region archivos de DATA
-                //eliminamos los CPK afectados              
-                string sRUTA_CPK_DATA_DESTINO = LeerINI("PES", "RUTA_CPK_DATA_DESTINO");
-
-                string sdt15_x64 = "dt15_x64.cpk";
-                string sdt36_g4 = "dt36_g4.cpk";
-
-                //ELIMINAMOS LOS DEL DESTINO
-                string sArchivoEliminar_dt15_x64 = sRUTA_CPK_DATA_DESTINO + sdt15_x64;
-                string sArchivoEliminar_dt36_g4 = sRUTA_CPK_DATA_DESTINO + sdt36_g4;
-
-                if (File.Exists(sArchivoEliminar_dt15_x64))
-                {
-                    File.Delete(sArchivoEliminar_dt15_x64);
-                }
-
-                if (File.Exists(sArchivoEliminar_dt36_g4))
-                {
-                    File.Delete(sArchivoEliminar_dt36_g4);
-                }
-
-                //archivos afectados
+                //aquí ya tenemos las 2 carpeta download.Temporada2006 y download.original
                 if (pesSeleccionado.CPK_ORIGINAL == "SI")
                 {
-
-                    string sRUTA_CPK_ORIGINALsdt15_x64 = LeerINI("PES", "RUTA_CPK_DATA_ORIGINAL") + sdt15_x64;
-                    string sRUTA_CPK_ORIGINALsdt36_g4 = LeerINI("PES", "RUTA_CPK_DATA_ORIGINAL") + sdt36_g4;
-
-                    if (File.Exists(sRUTA_CPK_ORIGINALsdt15_x64))
-                    {
-                        File.Copy(sRUTA_CPK_ORIGINALsdt15_x64, sArchivoEliminar_dt15_x64);
-                    }
-                    if (File.Exists(sRUTA_CPK_ORIGINALsdt36_g4))
-                    {
-                        File.Copy(sRUTA_CPK_ORIGINALsdt36_g4, sArchivoEliminar_dt36_g4);
-                    }
+                    //movemos original a download
+                    MoveDirectoryContents(sRUTA_CPK_DONWLOAD_ORIGINAL, sRUTA_CPK_DONWLOAD_DESTINO);
                 }
                 else
                 {
-                    string sRUTA_CPK_2006WCsdt15_x64 = LeerINI("PES", "RUTA_CPK_DATA_2006WC") + sdt15_x64;
-                    string sRUTA_CPK_2006WCsdt36_g4 = LeerINI("PES", "RUTA_CPK_DATA_2006WC") + sdt36_g4;
-
-                    if (File.Exists(sRUTA_CPK_2006WCsdt15_x64))
-                    {
-                        File.Copy(sRUTA_CPK_2006WCsdt15_x64, sArchivoEliminar_dt15_x64);
-                    }
-                    if (File.Exists(sRUTA_CPK_2006WCsdt36_g4))
-                    {
-                        File.Copy(sRUTA_CPK_2006WCsdt36_g4, sArchivoEliminar_dt36_g4);
-                    }
+                    //movemos temporada2006 a download
+                    MoveDirectoryContents(sRUTA_CPK_DONWLOAD_TEMPORADA2006, sRUTA_CPK_DONWLOAD_DESTINO);
                 }
 
-
-
-
-
-                #region dt14_all está en DATA
-                //volvemos a comprobar si es CPK original o no...
-                if (pesSeleccionado.CPK_ORIGINAL == "SI")
-                {
-                    //para los originales, si no existe el archivo, lo restauramos.
-                    string sdt14_all = "dt14_all.cpk";
-                    string sArchivoEliminar_sdt14_all = sRUTA_CPK_DATA_DESTINO + sdt14_all;
-                    //si no existe el archivo, lo restauramos de la ruta de los originales.
-                    if (!File.Exists(sArchivoEliminar_sdt14_all))
-                    {
-                        string sRUTA_CPK_ORIGINALsdt14_all = LeerINI("PES", "RUTA_CPK_DATA_ORIGINAL") + sdt14_all;
-                        if (File.Exists(sRUTA_CPK_ORIGINALsdt14_all))
-                        {
-                            File.Copy(sRUTA_CPK_ORIGINALsdt14_all, sArchivoEliminar_sdt14_all);
-                        }
-                    }
-                }
-                else
-                {
-                    //para los CPK modificados,eliminamos el dt14_all
-                    string sdt14_all = "dt14_all.cpk";
-                    string sArchivoEliminar_sdt14_all = sRUTA_CPK_DATA_DESTINO + sdt14_all;
-                    if (File.Exists(sArchivoEliminar_sdt14_all))
-                    {
-                        File.Delete(sArchivoEliminar_sdt14_all);
-                    }
-                }
-                #endregion
-
-                #endregion
-
+                //download.original
+                //download.Temporada2006
                 return false;
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error copiando la versión del CPK." + Environment.NewLine + ex.Message);
+                MessageBox.Show("Error copiando la versión del EXE." + Environment.NewLine + ex.Message);
                 return true;
             }
 
@@ -659,6 +576,182 @@ namespace PESModSelector
 
         #region OBSOLETO
 
+        /// <summary>
+        /// En funcion del pesSeleccionado, movemos el CPK
+        /// </summary>
+        /// <returns></returns>
+        //private bool copiarCPK()
+        //{
+        //    try
+        //    {
+        //        #region archivos de DOWNLOAD
+        //        //eliminamos los CPK afectados              
+        //        string sRUTA_CPK_DONWLOAD_DESTINO = LeerINI("PES", "RUTA_CPK_DONWLOAD_DESTINO");
+
+        //        string sdt80_100E_x64 = "dt80_100E_x64.cpk";
+        //        string sdt80_700E_x64 = "dt80_700E_x64.cpk";
+        //        string sDpFileListbin = "DpFileList.bin";
+
+        //        //ELIMINAMOS LOS DEL DESTINO
+        //        string sArchivoEliminar_dt80_100E_x64 = sRUTA_CPK_DONWLOAD_DESTINO + sdt80_100E_x64;
+        //        string sArchivoEliminar_dt80_700E_x64 = sRUTA_CPK_DONWLOAD_DESTINO + sdt80_700E_x64;
+        //        string sArchivoEliminar_sDpFileListbin = sRUTA_CPK_DONWLOAD_DESTINO + sDpFileListbin;
+
+        //        if (File.Exists(sArchivoEliminar_dt80_100E_x64))
+        //        {
+        //            File.Delete(sArchivoEliminar_dt80_100E_x64);
+        //        }
+
+        //        if (File.Exists(sArchivoEliminar_dt80_700E_x64))
+        //        {
+        //            File.Delete(sArchivoEliminar_dt80_700E_x64);
+        //        }
+
+        //        if (File.Exists(sArchivoEliminar_sDpFileListbin))
+        //        {
+        //            File.Delete(sArchivoEliminar_sDpFileListbin);
+        //        }
+
+        //        //archivos afectados
+        //        if (pesSeleccionado.CPK_ORIGINAL == "SI")
+        //        {
+
+        //            string sRUTA_CPK_ORIGINALsdt80_100E_x64 = LeerINI("PES", "RUTA_CPK_DONWLOAD_ORIGINAL") + sdt80_100E_x64;
+        //            string sRUTA_CPK_ORIGINALsdt80_700E_x64 = LeerINI("PES", "RUTA_CPK_DONWLOAD_ORIGINAL") + sdt80_700E_x64;
+        //            string sRUTA_CPK_ORIGINALsDpFileListbin = LeerINI("PES", "RUTA_CPK_DONWLOAD_ORIGINAL") + sDpFileListbin;
+
+        //            if (File.Exists(sRUTA_CPK_ORIGINALsdt80_100E_x64))
+        //            {
+        //                File.Copy(sRUTA_CPK_ORIGINALsdt80_100E_x64, sArchivoEliminar_dt80_100E_x64);
+        //            }
+        //            if (File.Exists(sRUTA_CPK_ORIGINALsdt80_700E_x64))
+        //            {
+        //                File.Copy(sRUTA_CPK_ORIGINALsdt80_700E_x64, sArchivoEliminar_dt80_700E_x64);
+        //            }
+        //            if (File.Exists(sRUTA_CPK_ORIGINALsDpFileListbin))
+        //            {
+        //                File.Copy(sRUTA_CPK_ORIGINALsDpFileListbin, sArchivoEliminar_sDpFileListbin);
+        //            }
+
+        //        }
+        //        else
+        //        {
+        //            string sRUTA_CPK_Temporada2006sdt80_100E_x64 = LeerINI("PES", "RUTA_CPK_DONWLOAD_Temporada2006") + sdt80_100E_x64;
+        //            string sRUTA_CPK_Temporada2006sdt80_700E_x64 = LeerINI("PES", "RUTA_CPK_DONWLOAD_Temporada2006") + sdt80_700E_x64;
+        //            string sRUTA_CPK_Temporada2006sDpFileListbin = LeerINI("PES", "RUTA_CPK_DONWLOAD_Temporada2006") + sDpFileListbin;
+
+        //            if (File.Exists(sRUTA_CPK_Temporada2006sdt80_100E_x64))
+        //            {
+        //                File.Copy(sRUTA_CPK_Temporada2006sdt80_100E_x64, sArchivoEliminar_dt80_100E_x64);
+        //            }
+        //            if (File.Exists(sRUTA_CPK_Temporada2006sdt80_700E_x64))
+        //            {
+        //                File.Copy(sRUTA_CPK_Temporada2006sdt80_700E_x64, sArchivoEliminar_dt80_700E_x64);
+        //            }
+        //            if (File.Exists(sRUTA_CPK_Temporada2006sDpFileListbin))
+        //            {
+        //                File.Copy(sRUTA_CPK_Temporada2006sDpFileListbin, sArchivoEliminar_sDpFileListbin);
+        //            }
+        //        }
+
+        //        #endregion
+
+        //        #region archivos de DATA
+        //        //eliminamos los CPK afectados              
+        //        string sRUTA_CPK_DATA_DESTINO = LeerINI("PES", "RUTA_CPK_DATA_DESTINO");
+
+        //        string sdt15_x64 = "dt15_x64.cpk";
+        //        string sdt36_g4 = "dt36_g4.cpk";
+
+        //        //ELIMINAMOS LOS DEL DESTINO
+        //        string sArchivoEliminar_dt15_x64 = sRUTA_CPK_DATA_DESTINO + sdt15_x64;
+        //        string sArchivoEliminar_dt36_g4 = sRUTA_CPK_DATA_DESTINO + sdt36_g4;
+
+        //        if (File.Exists(sArchivoEliminar_dt15_x64))
+        //        {
+        //            File.Delete(sArchivoEliminar_dt15_x64);
+        //        }
+
+        //        if (File.Exists(sArchivoEliminar_dt36_g4))
+        //        {
+        //            File.Delete(sArchivoEliminar_dt36_g4);
+        //        }
+
+        //        //archivos afectados
+        //        if (pesSeleccionado.CPK_ORIGINAL == "SI")
+        //        {
+
+        //            string sRUTA_CPK_ORIGINALsdt15_x64 = LeerINI("PES", "RUTA_CPK_DATA_ORIGINAL") + sdt15_x64;
+        //            string sRUTA_CPK_ORIGINALsdt36_g4 = LeerINI("PES", "RUTA_CPK_DATA_ORIGINAL") + sdt36_g4;
+
+        //            if (File.Exists(sRUTA_CPK_ORIGINALsdt15_x64))
+        //            {
+        //                File.Copy(sRUTA_CPK_ORIGINALsdt15_x64, sArchivoEliminar_dt15_x64);
+        //            }
+        //            if (File.Exists(sRUTA_CPK_ORIGINALsdt36_g4))
+        //            {
+        //                File.Copy(sRUTA_CPK_ORIGINALsdt36_g4, sArchivoEliminar_dt36_g4);
+        //            }
+        //        }
+        //        else
+        //        {
+        //            string sRUTA_CPK_Temporada2006sdt15_x64 = LeerINI("PES", "RUTA_CPK_DATA_Temporada2006") + sdt15_x64;
+        //            string sRUTA_CPK_Temporada2006sdt36_g4 = LeerINI("PES", "RUTA_CPK_DATA_Temporada2006") + sdt36_g4;
+
+        //            if (File.Exists(sRUTA_CPK_Temporada2006sdt15_x64))
+        //            {
+        //                File.Copy(sRUTA_CPK_Temporada2006sdt15_x64, sArchivoEliminar_dt15_x64);
+        //            }
+        //            if (File.Exists(sRUTA_CPK_Temporada2006sdt36_g4))
+        //            {
+        //                File.Copy(sRUTA_CPK_Temporada2006sdt36_g4, sArchivoEliminar_dt36_g4);
+        //            }
+        //        }
+
+
+
+
+
+        //        #region dt14_all está en DATA
+        //        //volvemos a comprobar si es CPK original o no...
+        //        if (pesSeleccionado.CPK_ORIGINAL == "SI")
+        //        {
+        //            //para los originales, si no existe el archivo, lo restauramos.
+        //            string sdt14_all = "dt14_all.cpk";
+        //            string sArchivoEliminar_sdt14_all = sRUTA_CPK_DATA_DESTINO + sdt14_all;
+        //            //si no existe el archivo, lo restauramos de la ruta de los originales.
+        //            if (!File.Exists(sArchivoEliminar_sdt14_all))
+        //            {
+        //                string sRUTA_CPK_ORIGINALsdt14_all = LeerINI("PES", "RUTA_CPK_DATA_ORIGINAL") + sdt14_all;
+        //                if (File.Exists(sRUTA_CPK_ORIGINALsdt14_all))
+        //                {
+        //                    File.Copy(sRUTA_CPK_ORIGINALsdt14_all, sArchivoEliminar_sdt14_all);
+        //                }
+        //            }
+        //        }
+        //        else
+        //        {
+        //            //para los CPK modificados,eliminamos el dt14_all
+        //            string sdt14_all = "dt14_all.cpk";
+        //            string sArchivoEliminar_sdt14_all = sRUTA_CPK_DATA_DESTINO + sdt14_all;
+        //            if (File.Exists(sArchivoEliminar_sdt14_all))
+        //            {
+        //                File.Delete(sArchivoEliminar_sdt14_all);
+        //            }
+        //        }
+        //        #endregion
+
+        //        #endregion
+
+        //        return false;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show("Error copiando la versión del CPK." + Environment.NewLine + ex.Message);
+        //        return true;
+        //    }
+
+        //}
         /// <summary>
         /// Obsoleto: Ahora solo se mueven los ini, stadium server está en carpeta común
         /// </summary>
