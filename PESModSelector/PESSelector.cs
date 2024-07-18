@@ -27,6 +27,7 @@ namespace PESModSelector
             public string DISCO_USB = string.Empty;
             public string CPK_ORIGINAL = string.Empty;
             public string VERSION_EXE = string.Empty;
+            public string DISCO_UNIDAD = string.Empty;
         }
 
         public proEvolutionSoccer pesEnUso = new proEvolutionSoccer();
@@ -42,9 +43,32 @@ namespace PESModSelector
             CenterToScreen();
             string sRuta = "";
             sRuta = Directory.GetCurrentDirectory() + "\\config.ini";
-            CargaCombo(sRuta);
+            CargaComboUnidades(sRuta);
+            CargaComboRutas(sRuta);
+
         }
-        private void CargaCombo(string sRuta)
+        private void CargaComboUnidades(string sRuta)
+        {
+            try
+            {
+                cbUnidades.Items.Clear();
+                txtFicheroINI.Text = sRuta;
+                sRuta = LeerINI("PES", "RUTA_INI");
+                string sUnidades = LeerINI("PES", "UNIDADES");
+                string[] listUnidades = sUnidades.Split(";");
+                foreach (string s in listUnidades)
+                {
+                    cbUnidades.Items.Add(s);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error cargando el combo de unidades." + Environment.NewLine + ex.Message);
+                return;
+            }
+
+        }
+        private void CargaComboRutas(string sRuta)
         {
             try
             {
@@ -67,7 +91,7 @@ namespace PESModSelector
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error cargando el combo." + Environment.NewLine + ex.Message);
+                MessageBox.Show("Error cargando el combo de PES." + Environment.NewLine + ex.Message);
                 return;
             }
 
@@ -193,6 +217,18 @@ namespace PESModSelector
                             lbVERSION_EXE_SEL.Text = line;
                         }
                     }
+                    else if (line.Contains("DISCO_UNIDAD"))
+                    {
+                        pes.DISCO_UNIDAD = line.Replace("DISCO_UNIDAD=", "");
+                        if (bEnUso)
+                        {
+                            cbUnidades.SelectedItem = pes.DISCO_UNIDAD;
+                        }
+                        else
+                        {
+                            cbUnidades.SelectedItem = pes.DISCO_UNIDAD;
+                        }
+                    }
                 }
 
             }
@@ -247,7 +283,7 @@ namespace PESModSelector
 
                 if (cbPesMod.SelectedItem != null)
                 {
-                    sRutaStadiumServerActual = string.Format(sRutaStadiumServerActual, cbPesMod.SelectedItem.ToString());
+                    sRutaStadiumServerActual = string.Format(sRutaStadiumServerActual, cbUnidades.SelectedItem.ToString(), cbPesMod.SelectedItem.ToString());
                 }
                 else
                 {
@@ -452,7 +488,7 @@ namespace PESModSelector
                 txtFicheroINI.Text = dialogiAbrirFichero.FileName;
 
             string sRuta = LeerINI("PES", "RUTA_INI");
-            CargaCombo(sRuta);
+            CargaComboRutas(sRuta);
 
             if (sRuta == "")
             {

@@ -1,0 +1,11 @@
+[PES_INFO]
+#NOMBRE DE LA CARPETA DONDE ESTA EL SAVE
+PES_ACTUAL=eFootball PES 2021 SEASON UPDATE.Temporada19961997
+#Si el parche está en el disco P: SI|NO si está en C:
+DISCO_USB=NO
+#Si el parche usa los CPKs Originales: SI|NO si usa los modificados: Parches 2006
+CPK_ORIGINAL=SI
+#Si el parche usa el de 435MB | 442MB | 448MB
+VERSION_EXE=442MB
+#|C:|P:|S:
+DISCO_UNIDAD=C
