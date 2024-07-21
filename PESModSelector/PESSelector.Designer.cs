@@ -113,15 +113,15 @@
             chkMoverStadiumServer.Location = new Point(43, 195);
             chkMoverStadiumServer.Margin = new Padding(3, 4, 3, 4);
             chkMoverStadiumServer.Name = "chkMoverStadiumServer";
-            chkMoverStadiumServer.Size = new Size(177, 24);
+            chkMoverStadiumServer.Size = new Size(232, 24);
             chkMoverStadiumServer.TabIndex = 6;
-            chkMoverStadiumServer.Text = "Mover Stadium Server";
+            chkMoverStadiumServer.Text = "Copia archivos Stadium Server";
             chkMoverStadiumServer.UseVisualStyleBackColor = true;
             // 
             // chkDiscoExterno
             // 
             chkDiscoExterno.AutoSize = true;
-            chkDiscoExterno.Location = new Point(266, 195);
+            chkDiscoExterno.Location = new Point(281, 195);
             chkDiscoExterno.Margin = new Padding(3, 4, 3, 4);
             chkDiscoExterno.Name = "chkDiscoExterno";
             chkDiscoExterno.Size = new Size(122, 24);

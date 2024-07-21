@@ -273,17 +273,17 @@ namespace PESModSelector
                 {
                     File.Delete(sArchivoEliminarMapTeams);
                 }
-
+                //TODAS LAS CONFIGURACIONES DEL STADIUM SERVER, ESTAN EN C
                 //copiamos los nuevos, al destino, vemos si está en C o P
                 string sRutaStadiumServerActual = LeerINI("PES", "RUTA_STADIUM_SERVER");
-                if (chkDiscoExterno.Checked)
-                {
-                    sRutaStadiumServerActual = LeerINI("PES", "RUTA_STADIUM_SERVER_USB");
-                }
+                //if (chkDiscoExterno.Checked)
+                //{
+                //    sRutaStadiumServerActual = LeerINI("PES", "RUTA_STADIUM_SERVER_USB");
+                //}
 
                 if (cbPesMod.SelectedItem != null)
                 {
-                    sRutaStadiumServerActual = string.Format(sRutaStadiumServerActual, cbUnidades.SelectedItem.ToString(), cbPesMod.SelectedItem.ToString());
+                    sRutaStadiumServerActual = string.Format(sRutaStadiumServerActual, cbPesMod.SelectedItem.ToString());
                 }
                 else
                 {
