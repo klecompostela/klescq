@@ -420,14 +420,19 @@ namespace PESModSelector
             {
                 string sRUTA_CPK_DONWLOAD_DESTINO = LeerINI("PES", "RUTA_CPK_DONWLOAD_DESTINO");
                 string sRUTA_CPK_DONWLOAD_ORIGINAL = LeerINI("PES", "RUTA_CPK_DONWLOAD_ORIGINAL");
+                string sRUTA_CPK_DONWLOAD_TEMPORADA1993 = LeerINI("PES", "RUTA_CPK_DONWLOAD_TEMPORADA1993");
                 string sRUTA_CPK_DONWLOAD_TEMPORADA2006 = LeerINI("PES", "RUTA_CPK_DONWLOAD_TEMPORADA2006");
-
                 //movemos lo que hay a su origen.... y el destino se queda vacio.
                 if (pesEnUso.CPK_ORIGINAL == "SI")
                 {
                     MoveDirectoryContents(sRUTA_CPK_DONWLOAD_DESTINO, sRUTA_CPK_DONWLOAD_ORIGINAL);
                 }
-                else
+                if (pesEnUso.CPK_ORIGINAL == "NO1993")
+                {
+
+                    MoveDirectoryContents(sRUTA_CPK_DONWLOAD_DESTINO, sRUTA_CPK_DONWLOAD_TEMPORADA1993);
+                }
+                if (pesEnUso.CPK_ORIGINAL == "NO2006")
                 {
 
                     MoveDirectoryContents(sRUTA_CPK_DONWLOAD_DESTINO, sRUTA_CPK_DONWLOAD_TEMPORADA2006);
@@ -440,9 +445,16 @@ namespace PESModSelector
                     //movemos original a download
                     MoveDirectoryContents(sRUTA_CPK_DONWLOAD_ORIGINAL, sRUTA_CPK_DONWLOAD_DESTINO);
                 }
-                else
+
+                if (pesSeleccionado.CPK_ORIGINAL == "NO1993")
                 {
-                    //movemos temporada2006 a download
+                    //movemos temporada1993 a download
+                    MoveDirectoryContents(sRUTA_CPK_DONWLOAD_TEMPORADA1993, sRUTA_CPK_DONWLOAD_DESTINO);
+                }
+
+                if (pesSeleccionado.CPK_ORIGINAL == "NO2006")
+                {
+                    //movemos temporada1993 a download
                     MoveDirectoryContents(sRUTA_CPK_DONWLOAD_TEMPORADA2006, sRUTA_CPK_DONWLOAD_DESTINO);
                 }
 
@@ -452,7 +464,7 @@ namespace PESModSelector
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error copiando la versión del EXE." + Environment.NewLine + ex.Message);
+                MessageBox.Show("Error copiando los CPKs." + Environment.NewLine + ex.Message);
                 return true;
             }
 
