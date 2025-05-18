@@ -25,7 +25,8 @@ namespace PESModSelector
         {
             public string PES = string.Empty;
             public string DISCO_USB = string.Empty;
-            public string CPK_ORIGINAL = string.Empty;
+            public string CPK_DOWNLOAD_ORIGINAL = string.Empty;
+            public string CPK_DATA_ORIGINAL = string.Empty;
             public string VERSION_EXE = string.Empty;
             public string DISCO_UNIDAD = string.Empty;
         }
@@ -34,7 +35,8 @@ namespace PESModSelector
         public proEvolutionSoccer pesSeleccionado = new proEvolutionSoccer();
 
         bool bEXEDiferente = false;
-        bool bCPKsDiferente = false;
+        bool bCPKs_DOWNLOAD_Diferente = false;
+        bool bCPKs_DATA_Diferente = false;
         bool bMismoOrigenyDestino = false;
         public PESSelector()
         {
@@ -192,17 +194,30 @@ namespace PESModSelector
                             }
                         }
                     }
-                    else if (line.Contains("CPK_ORIGINAL"))
+                    else if (line.Contains("CPK_DOWNLOAD_ORIGINAL"))
                     {
-                        pes.CPK_ORIGINAL = line.Replace("CPK_ORIGINAL=", "");
+                        pes.CPK_DOWNLOAD_ORIGINAL = line.Replace("CPK_DOWNLOAD_ORIGINAL=", "");
                         if (bEnUso)
                         {
 
-                            lbCPK_ORIGINAL.Text = line;
+                            lbCPK_DOWNLOAD_ORIGINAL.Text = line;
                         }
                         else
                         {
-                            lbCPK_ORIGINAL_SEL.Text = line;
+                            lbCPK_DOWNLOAD_ORIGINAL_SEL.Text = line;
+                        }
+                    }
+                    else if (line.Contains("CPK_DATA_ORIGINAL"))
+                    {
+                        pes.CPK_DATA_ORIGINAL = line.Replace("CPK_DATA_ORIGINAL=", "");
+                        if (bEnUso)
+                        {
+
+                            lbCPK_DATA_ORIGINAL.Text = line;
+                        }
+                        else
+                        {
+                           lbCPK_DATA_ORIGINAL_SEL.Text = line;
                         }
                     }
                     else if (line.Contains("VERSION_EXE"))
@@ -414,7 +429,7 @@ namespace PESModSelector
         /// 
         /// </summary>
         /// <returns></returns>
-        private bool copiarCPK()
+        private bool copiarCPK_DOWNLOAD()
         {
             try
             {
@@ -423,16 +438,16 @@ namespace PESModSelector
                 string sRUTA_CPK_DONWLOAD_TEMPORADA1993 = LeerINI("PES", "RUTA_CPK_DONWLOAD_TEMPORADA1993");
                 string sRUTA_CPK_DONWLOAD_TEMPORADA2006 = LeerINI("PES", "RUTA_CPK_DONWLOAD_TEMPORADA2006");
                 //movemos lo que hay a su origen.... y el destino se queda vacio.
-                if (pesEnUso.CPK_ORIGINAL == "SI")
+                if (pesEnUso.CPK_DOWNLOAD_ORIGINAL == "SI")
                 {
                     MoveDirectoryContents(sRUTA_CPK_DONWLOAD_DESTINO, sRUTA_CPK_DONWLOAD_ORIGINAL);
                 }
-                if (pesEnUso.CPK_ORIGINAL == "NO1993")
+                if (pesEnUso.CPK_DOWNLOAD_ORIGINAL == "NO1993")
                 {
 
                     MoveDirectoryContents(sRUTA_CPK_DONWLOAD_DESTINO, sRUTA_CPK_DONWLOAD_TEMPORADA1993);
                 }
-                if (pesEnUso.CPK_ORIGINAL == "NO2006")
+                if (pesEnUso.CPK_DOWNLOAD_ORIGINAL == "NO2006")
                 {
 
                     MoveDirectoryContents(sRUTA_CPK_DONWLOAD_DESTINO, sRUTA_CPK_DONWLOAD_TEMPORADA2006);
@@ -440,19 +455,19 @@ namespace PESModSelector
 
 
                 //aquí ya tenemos las 2 carpeta download.Temporada2006 y download.original
-                if (pesSeleccionado.CPK_ORIGINAL == "SI")
+                if (pesSeleccionado.CPK_DOWNLOAD_ORIGINAL == "SI")
                 {
                     //movemos original a download
                     MoveDirectoryContents(sRUTA_CPK_DONWLOAD_ORIGINAL, sRUTA_CPK_DONWLOAD_DESTINO);
                 }
 
-                if (pesSeleccionado.CPK_ORIGINAL == "NO1993")
+                if (pesSeleccionado.CPK_DOWNLOAD_ORIGINAL == "NO1993")
                 {
                     //movemos temporada1993 a download
                     MoveDirectoryContents(sRUTA_CPK_DONWLOAD_TEMPORADA1993, sRUTA_CPK_DONWLOAD_DESTINO);
                 }
 
-                if (pesSeleccionado.CPK_ORIGINAL == "NO2006")
+                if (pesSeleccionado.CPK_DOWNLOAD_ORIGINAL == "NO2006")
                 {
                     //movemos temporada1993 a download
                     MoveDirectoryContents(sRUTA_CPK_DONWLOAD_TEMPORADA2006, sRUTA_CPK_DONWLOAD_DESTINO);
@@ -464,7 +479,51 @@ namespace PESModSelector
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error copiando los CPKs." + Environment.NewLine + ex.Message);
+                MessageBox.Show("Error copiando los CPK de DOWNLOAD." + Environment.NewLine + ex.Message);
+                return true;
+            }
+
+        }
+
+        private bool copiarCPK_DATA()
+        {
+            try
+            {
+                string sRUTA_CPK_DATA_DESTINO = LeerINI("PES", "RUTA_CPK_DATA_DESTINO");
+                string sRUTA_CPK_DATA_ORIGINAL = LeerINI("PES", "RUTA_CPK_DATA_ORIGINAL");
+                string sRUTA_CPK_DATA_TEMPORADA2004 = LeerINI("PES", "RUTA_CPK_DATA_TEMPORADA2004");
+
+                //movemos lo que hay a su origen.... y el destino se queda vacio.
+                if (pesEnUso.CPK_DATA_ORIGINAL == "SI")
+                {
+                    MoveDirectoryContents(sRUTA_CPK_DATA_DESTINO, sRUTA_CPK_DATA_ORIGINAL);
+                }
+                if (pesEnUso.CPK_DATA_ORIGINAL == "NO2004")
+                {
+
+                    MoveDirectoryContents(sRUTA_CPK_DATA_DESTINO, sRUTA_CPK_DATA_TEMPORADA2004);
+                }
+
+                //aquí ya tenemos las 2 carpeta download.Temporada2004 y data.original
+                if (pesSeleccionado.CPK_DATA_ORIGINAL == "SI")
+                {
+                    //movemos original a data
+                    MoveDirectoryContents(sRUTA_CPK_DATA_ORIGINAL, sRUTA_CPK_DATA_DESTINO);
+                }
+
+                if (pesSeleccionado.CPK_DATA_ORIGINAL == "NO2004")
+                {
+                    //movemos temporada2004 a data
+                    MoveDirectoryContents(sRUTA_CPK_DATA_TEMPORADA2004, sRUTA_CPK_DATA_DESTINO);
+                }
+
+                //data.original
+                //data.Temporada2004
+                return false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error copiando los CPK de DATA." + Environment.NewLine + ex.Message);
                 return true;
             }
 
@@ -480,9 +539,13 @@ namespace PESModSelector
             {
                 bEXEDiferente = true;
             }
-            if (pesEnUso.CPK_ORIGINAL != pesSeleccionado.CPK_ORIGINAL)
+            if (pesEnUso.CPK_DOWNLOAD_ORIGINAL != pesSeleccionado.CPK_DOWNLOAD_ORIGINAL)
             {
-                bCPKsDiferente = true;
+                bCPKs_DOWNLOAD_Diferente = true;
+            }
+            if (pesEnUso.CPK_DATA_ORIGINAL != pesSeleccionado.CPK_DATA_ORIGINAL)
+            {
+                bCPKs_DATA_Diferente = true;
             }
         }
 
@@ -567,14 +630,25 @@ namespace PESModSelector
                 }
 
 
-                if (bCPKsDiferente)
+                if (bCPKs_DOWNLOAD_Diferente)
                 {
-                    bool error = copiarCPK();
+                    bool error = copiarCPK_DOWNLOAD();
                     if (error)
                     {
                         return;
                     }
                 }
+
+                if (bCPKs_DATA_Diferente)
+                {
+                    bool error = copiarCPK_DATA();
+                    if (error)
+                    {
+                        return;
+                    }
+                }
+
+
 
                 //DE LA RUTA SAVE a RUTA DEL MOD 
                 if (Directory.Exists(sRutaBAK) == true)
