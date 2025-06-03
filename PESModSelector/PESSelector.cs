@@ -217,7 +217,7 @@ namespace PESModSelector
                         }
                         else
                         {
-                           lbCPK_DATA_ORIGINAL_SEL.Text = line;
+                            lbCPK_DATA_ORIGINAL_SEL.Text = line;
                         }
                     }
                     else if (line.Contains("VERSION_EXE"))
@@ -492,6 +492,7 @@ namespace PESModSelector
                 string sRUTA_CPK_DATA_DESTINO = LeerINI("PES", "RUTA_CPK_DATA_DESTINO");
                 string sRUTA_CPK_DATA_ORIGINAL = LeerINI("PES", "RUTA_CPK_DATA_ORIGINAL");
                 string sRUTA_CPK_DATA_TEMPORADA2004 = LeerINI("PES", "RUTA_CPK_DATA_TEMPORADA2004");
+                string sRUTA_CPK_DATA_TEMPORADA2006 = LeerINI("PES", "RUTA_CPK_DATA_TEMPORADA2006");
 
                 //movemos lo que hay a su origen.... y el destino se queda vacio.
                 if (pesEnUso.CPK_DATA_ORIGINAL == "SI")
@@ -500,10 +501,12 @@ namespace PESModSelector
                 }
                 if (pesEnUso.CPK_DATA_ORIGINAL == "NO2004")
                 {
-
                     MoveDirectoryContents(sRUTA_CPK_DATA_DESTINO, sRUTA_CPK_DATA_TEMPORADA2004);
                 }
-
+                if (pesEnUso.CPK_DATA_ORIGINAL == "NO2006")
+                {
+                    MoveDirectoryContents(sRUTA_CPK_DATA_DESTINO, sRUTA_CPK_DATA_TEMPORADA2006);
+                }
                 //aquí ya tenemos las 2 carpeta download.Temporada2004 y data.original
                 if (pesSeleccionado.CPK_DATA_ORIGINAL == "SI")
                 {
@@ -516,7 +519,11 @@ namespace PESModSelector
                     //movemos temporada2004 a data
                     MoveDirectoryContents(sRUTA_CPK_DATA_TEMPORADA2004, sRUTA_CPK_DATA_DESTINO);
                 }
-
+                if (pesSeleccionado.CPK_DATA_ORIGINAL == "NO2006")
+                {
+                    //movemos temporada2006 a data
+                    MoveDirectoryContents(sRUTA_CPK_DATA_TEMPORADA2006, sRUTA_CPK_DATA_DESTINO);
+                }
                 //data.original
                 //data.Temporada2004
                 return false;
