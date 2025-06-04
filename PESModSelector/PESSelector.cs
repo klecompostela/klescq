@@ -133,13 +133,13 @@ namespace PESModSelector
                 {
                     if (cbPesMod.SelectedItem == null)
                     {
-                        MessageBox.Show("Seleccione un elemento.");
+                        MessageBox.Show("Seleccione un elemento.", "PES Mod Selector", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return;
                     }
                     if (cbPesMod.SelectedItem.ToString() == pesEnUso.PES.ToString())
                     {
                         bMismoOrigenyDestino = true;
-                        MessageBox.Show("El origen y destino tiene que ser diferente.");
+                        MessageBox.Show("El origen y destino tiene que ser diferente.", "PES Mod Selector", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return;
                     }
                     else
@@ -584,18 +584,18 @@ namespace PESModSelector
             {
                 if (cbPesMod.SelectedItem == null)
                 {
-                    MessageBox.Show("No hay ningún elemnto seleccionado.");
+                    MessageBox.Show("No hay ningún elemnto seleccionado.", "PES Mod Selector", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
 
                 if (string.IsNullOrEmpty(cbPesMod.SelectedItem.ToString()))
                 {
-                    MessageBox.Show("No hay ningún elemnto seleccionado.");
+                    MessageBox.Show("No hay ningún elemnto seleccionado.", "PES Mod Selector", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
                 if (bMismoOrigenyDestino)
                 {
-                    MessageBox.Show("El origen y destino no puede ser el mismo.");
+                    MessageBox.Show("El origen y destino no puede ser el mismo.", "PES Mod Selector", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
                 ////RENOMBRAR LA QUE EXISTE
@@ -655,8 +655,6 @@ namespace PESModSelector
                     }
                 }
 
-
-
                 //DE LA RUTA SAVE a RUTA DEL MOD 
                 if (Directory.Exists(sRutaBAK) == true)
                 {
@@ -674,17 +672,27 @@ namespace PESModSelector
                 if (sRutaOrigenNuevoMOD != sRutaDestino)
                 {
                     Directory.Move(sRutaOrigenNuevoMOD, sRutaDestino);
-                    MessageBox.Show("SAVE actualizado a " + cbPesMod.SelectedItem.ToString() + "\nRevisa el exe.");
+                    MessageBox.Show("SAVE ACTUALIZADO A: \n\n " + cbPesMod.SelectedItem.ToString().ToUpper() + "\n", "PES Mod Selector", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    MessageBox.Show("El origen y el destino tiene que ser diferente");
+                    MessageBox.Show("El origen y el destino tiene que ser diferente", "PES Mod Selector", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return;
                 }
                 //MessageBox.Show(string.Format("Movemos de sRutaOrigenNuevoMOD:{0} a sRutaDestino:{1}", sRutaOrigenNuevoMOD, sRutaDestino));
                 //al acabar el proceso, establecemos los parámetros del nuevo
                 setInfoPESActual(pesEnUso, true);
 
+            }
+            catch (UnauthorizedAccessException ex)
+            {   
+                MessageBox.Show("No tienes permisos para acceder a la carpeta.", "PES Mod Selector", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            catch (IOException ex)
+            {
+                MessageBox.Show("Ocurrió un problema de acceso al archivo o carpeta.\n\nCOMPRUEBA QUE EL EXPLORADOR DE ARCHIVOS ESTÁ CERRADO.\n\n" + ex.Message, "PES Mod Selector", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
             catch (Exception ex)
             {
