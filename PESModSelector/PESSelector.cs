@@ -437,6 +437,8 @@ namespace PESModSelector
                 string sRUTA_CPK_DONWLOAD_ORIGINAL = LeerINI("PES", "RUTA_CPK_DONWLOAD_ORIGINAL");
                 string sRUTA_CPK_DONWLOAD_TEMPORADA1993 = LeerINI("PES", "RUTA_CPK_DONWLOAD_TEMPORADA1993");
                 string sRUTA_CPK_DONWLOAD_TEMPORADA2006 = LeerINI("PES", "RUTA_CPK_DONWLOAD_TEMPORADA2006");
+                string sRUTA_CPK_DONWLOAD_BELIEVE = LeerINI("PES", "RUTA_CPK_DONWLOAD_BELIEVE");
+
                 //movemos lo que hay a su origen.... y el destino se queda vacio.
                 if (pesEnUso.CPK_DOWNLOAD_ORIGINAL == "SI")
                 {
@@ -452,7 +454,11 @@ namespace PESModSelector
 
                     MoveDirectoryContents(sRUTA_CPK_DONWLOAD_DESTINO, sRUTA_CPK_DONWLOAD_TEMPORADA2006);
                 }
+                if (pesEnUso.CPK_DOWNLOAD_ORIGINAL == "NOBELIEVE")
+                {
 
+                    MoveDirectoryContents(sRUTA_CPK_DONWLOAD_DESTINO, sRUTA_CPK_DONWLOAD_BELIEVE);
+                }
 
                 //aquí ya tenemos las 2 carpeta download.Temporada2006 y download.original
                 if (pesSeleccionado.CPK_DOWNLOAD_ORIGINAL == "SI")
@@ -471,6 +477,12 @@ namespace PESModSelector
                 {
                     //movemos temporada1993 a download
                     MoveDirectoryContents(sRUTA_CPK_DONWLOAD_TEMPORADA2006, sRUTA_CPK_DONWLOAD_DESTINO);
+                }
+
+                if (pesSeleccionado.CPK_DOWNLOAD_ORIGINAL == "NOBELIEVE")
+                {
+                    //movemos temporada1993 a download
+                    MoveDirectoryContents(sRUTA_CPK_DONWLOAD_BELIEVE, sRUTA_CPK_DONWLOAD_DESTINO);
                 }
 
                 //download.original
@@ -685,7 +697,7 @@ namespace PESModSelector
 
             }
             catch (UnauthorizedAccessException ex)
-            {   
+            {
                 MessageBox.Show("No tienes permisos para acceder a la carpeta.", "PES Mod Selector", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
